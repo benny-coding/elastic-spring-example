@@ -16,18 +16,18 @@ public class ElasticSpringExampleApplicationTests {
 	@Autowired
 	ElasticApi elasticApi;
 
-	private final String ELASTIC_INDEX = "test_index";
-	private final String ELASTIC_TYPE = "test_type";
+	private final String ELASTIC_INDEX = "database";
+	private final String ELASTIC_TYPE = "table";
 
 	@Test
 	public void 엘라스틱서치_POST_전송() {
 		String url = ELASTIC_INDEX + "/" + ELASTIC_TYPE;
 		Weather weather = new Weather();
-		weather.setCity("Seoul");
-		weather.setTemperature(10.2);
-		weather.setSeason("Winter");
+		weather.setCity("Seoul3");
+		weather.setTemperature(3.2);
+		weather.setSeason("Winter3");
 
-		Map<String, Object> result = elasticApi.callElasticApi("POST", url, weather, null);
+		Map<String, Object> result = elasticApi.callElasticApiAuth("POST", url, weather, null);
 		System.out.println(result.get("resultCode"));
 		System.out.println(result.get("resultBody"));
 	}
@@ -35,14 +35,14 @@ public class ElasticSpringExampleApplicationTests {
 
 	@Test
 	public void 엘라스틱서치_PUT_전송() {
-		String id = "122345";
+		String id = "0000001";
 		String url = ELASTIC_INDEX + "/" + ELASTIC_TYPE+"/"+id;
 		Weather weather = new Weather();
 		weather.setCity("Tokyo");
 		weather.setTemperature(12.3);
 		weather.setSeason("Winter");
 
-		Map<String, Object> result = elasticApi.callElasticApi("PUT", url, weather, null);
+		Map<String, Object> result = elasticApi.callElasticApiAuth("PUT", url, weather, null);
 		System.out.println(result.get("resultCode"));
 		System.out.println(result.get("resultBody"));
 	}
@@ -50,9 +50,18 @@ public class ElasticSpringExampleApplicationTests {
 
 	@Test
 	public void 앨라스틱서치_GET_전송() {
-		String id = "122345";
+		String id = "5mSg6m4Br6ylg6grz6Xh";
 		String url = ELASTIC_INDEX + "/" + ELASTIC_TYPE+"/"+id;
-		Map<String, Object> result = elasticApi.callElasticApi("GET", url, null, null);
+		Map<String, Object> result = elasticApi.callElasticApiAuth("GET", url, null, null);
+		System.out.println(result.get("resultCode"));
+		System.out.println(result.get("resultBody"));
+	}
+
+	@Test
+	public void 앨라스틱서치_모든_데이터_조회() {
+
+		String url = "database/_search";
+		Map<String, Object> result = elasticApi.callElasticApiAuth("GET", url, null, null);
 		System.out.println(result.get("resultCode"));
 		System.out.println(result.get("resultBody"));
 	}
@@ -62,7 +71,7 @@ public class ElasticSpringExampleApplicationTests {
 	public void 앨라스틱서치_DELETE_전송() {
 		String id = "122345";
 		String url = ELASTIC_INDEX + "/" + ELASTIC_TYPE+"/"+id;
-		Map<String, Object> result = elasticApi.callElasticApi("DELETE", url, null, null);
+		Map<String, Object> result = elasticApi.callElasticApiAuth("DELETE", url, null, null);
 		System.out.println(result.get("resultCode"));
 		System.out.println(result.get("resultBody"));
 	}
