@@ -16,16 +16,16 @@ public class ElasticSpringExampleApplicationTests {
 	@Autowired
 	ElasticApi elasticApi;
 
-	private final String ELASTIC_INDEX = "database";
-	private final String ELASTIC_TYPE = "table";
+	private final String ELASTIC_INDEX = "rssdata";
+	private final String ELASTIC_TYPE = "firstdata";
 
 	@Test
 	public void 엘라스틱서치_POST_전송() {
 		String url = ELASTIC_INDEX + "/" + ELASTIC_TYPE;
 		Weather weather = new Weather();
-		weather.setCity("Seoul3");
-		weather.setTemperature(3.2);
-		weather.setSeason("Winter3");
+		weather.setCity("jeju");
+		weather.setTemperature(40.2);
+		weather.setSeason("Summer");
 
 		Map<String, Object> result = elasticApi.callElasticApiAuth("POST", url, weather, null);
 		System.out.println(result.get("resultCode"));
@@ -69,7 +69,7 @@ public class ElasticSpringExampleApplicationTests {
 
 	@Test
 	public void 앨라스틱서치_DELETE_전송() {
-		String id = "122345";
+		String id = "YGaO7m4Br6ylg6gr6dGc";
 		String url = ELASTIC_INDEX + "/" + ELASTIC_TYPE+"/"+id;
 		Map<String, Object> result = elasticApi.callElasticApiAuth("DELETE", url, null, null);
 		System.out.println(result.get("resultCode"));
